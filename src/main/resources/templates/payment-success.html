@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment Success - Online Rental System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <a class="brand" th:href="@{/items}">🏠 RentalSystem</a>
+    <div>
+        <a th:href="@{/items}">All Items</a>
+        <a th:href="@{/bookings/my-bookings}">My Bookings</a>
+        <a th:href="@{/payments/my-payments}">My Payments</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card" style="max-width:600px; margin:0 auto; text-align:center;">
+
+        <!-- Success Icon -->
+        <div style="font-size:80px; margin-bottom:20px;">✅</div>
+
+        <h2 style="color:#27ae60; margin-bottom:10px;">Payment Successful!</h2>
+        <p style="color:#777; margin-bottom:20px;">
+            Your booking has been confirmed successfully.
+        </p>
+
+        <!-- Payment Details -->
+        <div style="background:#f9f9f9; padding:20px;
+                    border-radius:8px; margin:20px 0; text-align:left;">
+            <h3 style="margin-bottom:15px;">Payment Details</h3>
+            <table style="width:100%; box-shadow:none;">
+                <tr>
+                    <td style="padding:8px 0; color:#777;">Transaction ID</td>
+                    <td style="padding:8px 0; font-weight:bold; font-size:12px;"
+                        th:text="${payment.transactionId}"></td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0; color:#777;">Item</td>
+                    <td style="padding:8px 0;"
+                        th:text="${payment.booking.item.name}"></td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0; color:#777;">Payment Method</td>
+                    <td style="padding:8px 0;"
+                        th:text="${payment.paymentMethod}"></td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0; color:#777;">Payment Date</td>
+                    <td style="padding:8px 0;"
+                        th:text="${#temporals.format(payment.paymentDate,
+                                  'dd-MM-yyyy HH:mm')}"></td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0; color:#777;">Status</td>
+                    <td style="padding:8px 0; color:#27ae60; font-weight:bold;"
+                        th:text="${payment.paymentStatus}"></td>
+                </tr>
+                <tr style="border-top:2px solid #ddd;">
+                    <td style="padding:12px 0; font-weight:bold; font-size:18px;">
+                        Amount Paid
+                    </td>
+                    <td style="padding:12px 0; font-weight:bold;
+                               font-size:18px; color:#27ae60;">
+                        ₹<span th:text="${payment.amount}"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Buttons -->
+        <a th:href="@{/bookings/my-bookings}" class="btn btn-primary"
+           style="margin-right:10px;">
+            📋 My Bookings
+        </a>
+        <a th:href="@{/payments/my-payments}" class="btn btn-success">
+            💳 My Payments
+        </a>
+        <a th:href="@{/items}" class="btn btn-warning" style="margin-top:10px;">
+            🏠 Browse More Items
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

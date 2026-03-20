@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Payments - Online Rental System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <a class="brand" th:href="@{/admin/dashboard}">🏠 Admin Panel</a>
+    <div>
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/users}">Users</a>
+        <a th:href="@{/admin/bookings}">Bookings</a>
+        <a th:href="@{/payments/admin/all-payments}">Payments</a>
+        <a th:href="@{/items/add}">Add Item</a>
+        <a th:href="@{/items}">View Site</a>
+       <form action="/logout" method="post" style="display:inline;">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <button type="submit" style="background:none; border:none; color:white;
+                                  cursor:pointer; font-size:14px; padding:8px 12px;
+                                  border-radius:20px; transition:all 0.3s ease;">
+        🚪 Logout
+    </button>
+</form>
+    </div>
+</nav>
+
+<div class="container">
+    <h2 style="margin-bottom:20px;">💳 All Payments</h2>
+
+    <!-- No Payments -->
+    <div th:if="${#lists.isEmpty(payments)}" class="alert alert-danger">
+        No payments found!
+    </div>
+
+    <!-- Payments Table -->
+    <table th:unless="${#lists.isEmpty(payments)}">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Transaction ID</th>
+                <th>User</th>
+                <th>Item</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="payment : ${payments}">
+                <td th:text="${payment.id}"></td>
+                <td style="font-size:11px;"
+                    th:text="${payment.transactionId}"></td>
+                <td th:text="${payment.user.name}"></td>
+                <td th:text="${payment.booking.item.name}"></td>
+                <td style="color:#27ae60; font-weight:bold;">
+                    ₹<span th:text="${payment.amount}"></span>
+                </td>
+                <td th:text="${payment.paymentMethod}"></td>
+                <td th:text="${#temporals.format(payment.paymentDate,
+                              'dd-MM-yyyy HH:mm')}"></td>
+                <td>
+                    <span th:text="${payment.paymentStatus}"
+                          th:style="${payment.paymentStatus.name() == 'SUCCESS'} ?
+                                   'color:green; font-weight:bold' :
+                                   (${payment.paymentStatus.name() == 'FAILED'} ?
+                                   'color:red; font-weight:bold' :
+                                   'color:orange; font-weight:bold')">
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Total Revenue -->
+    <div class="card" style="margin-top:20px;">
+        <h3>💰 Total Revenue</h3>
+        <p style="font-size:30px; font-weight:bold; color:#27ae60; margin-top:10px;">
+            ₹<span th:text="${#aggregates.sum(payments.![amount])}"></span>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

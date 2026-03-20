@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Payments - Online Rental System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <a class="brand" href="/items">🏠 RentalSystem</a>
+    <div>
+        <a href="/items">All Items</a>
+        <a href="/bookings/my-bookings">📋 My Bookings</a>
+        <a href="/payments/my-payments">💳 My Payments</a>
+        <a href="/logout">🚪 Logout</a>
+    </div>
+</nav>
+
+
+<div class="container">
+    <h2 style="margin-bottom:20px;">💳 My Payments</h2>
+
+    <!-- No Payments -->
+    <div th:if="${#lists.isEmpty(payments)}" class="alert alert-danger">
+        No payments found! 
+        <a th:href="@{/items}">Browse Items</a>
+    </div>
+
+    <!-- Payments Table -->
+    <table th:unless="${#lists.isEmpty(payments)}">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Transaction ID</th>
+                <th>Item</th>
+                <th>Amount</th>
+                <th>Payment Method</th>
+                <th>Payment Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="payment : ${payments}">
+                <td th:text="${payment.id}"></td>
+                <td style="font-size:11px;"
+                    th:text="${payment.transactionId}"></td>
+                <td th:text="${payment.booking.item.name}"></td>
+                <td style="color:#27ae60; font-weight:bold;">
+                    ₹<span th:text="${payment.amount}"></span>
+                </td>
+                <td th:text="${payment.paymentMethod}"></td>
+                <td th:text="${#temporals.format(payment.paymentDate,
+                              'dd-MM-yyyy HH:mm')}"></td>
+                <td>
+                    <span th:text="${payment.paymentStatus}"
+                          th:style="${payment.paymentStatus.name() == 'SUCCESS'} ?
+                                   'color:green; font-weight:bold' :
+                                   (${payment.paymentStatus.name() == 'FAILED'} ?
+                                   'color:red; font-weight:bold' :
+                                   'color:orange; font-weight:bold')">
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard - Online Rental System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <a class="brand" href="/admin/dashboard">⚙️ Admin Panel</a>
+    <div>
+        <a href="/admin/dashboard">📊 Dashboard</a>
+        <a href="/admin/users">👥 Users</a>
+        <a href="/admin/bookings">📋 Bookings</a>
+        <a href="/payments/admin/all-payments">💳 Payments</a>
+        <a href="/items/add">➕ Add Item</a>
+        <a href="/items">🏠 View Site</a>
+       <form action="/logout" method="post" style="display:inline;">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <button type="submit" style="background:none; border:none; color:white;
+                                  cursor:pointer; font-size:14px; padding:8px 12px;
+                                  border-radius:20px; transition:all 0.3s ease;">
+        🚪 Logout
+    </button>
+</form>
+    </div>
+</nav>
+
+<div class="container">
+    <h2 style="margin-bottom:25px; color:#2c3e50;">📊 Admin Dashboard</h2>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3 th:text="${totalUsers}"></h3>
+            <p>👥 Total Users</p>
+        </div>
+        <div class="stat-card">
+            <h3 th:text="${totalItems}"></h3>
+            <p>🏷️ Total Items</p>
+        </div>
+        <div class="stat-card">
+            <h3 th:text="${totalBookings}"></h3>
+            <p>📋 Total Bookings</p>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card" style="margin-bottom:25px;">
+        <h2>⚡ Quick Actions</h2>
+        <div style="display:flex; gap:15px; margin-top:15px; flex-wrap:wrap;">
+            <a href="/items/add" class="btn btn-success">➕ Add New Item</a>
+            <a href="/admin/users" class="btn btn-primary">👥 Manage Users</a>
+            <a href="/admin/bookings" class="btn btn-warning">📋 Manage Bookings</a>
+            <a href="/payments/admin/all-payments" class="btn btn-danger">💳 View Payments</a>
+        </div>
+    </div>
+
+    <!-- Recent Bookings -->
+    <div class="card">
+        <h2>📋 Recent Bookings</h2>
+
+        <div th:if="${#lists.isEmpty(recentBookings)}"
+             class="alert alert-danger" style="margin-top:15px;">
+            No bookings yet!
+        </div>
+
+        <table th:unless="${#lists.isEmpty(recentBookings)}"
+               style="margin-top:15px;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Item</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="booking : ${recentBookings}">
+                    <td th:text="${booking.id}"></td>
+                    <td th:text="${booking.user.name}"></td>
+                    <td th:text="${booking.item.name}"></td>
+                    <td th:text="${booking.startDate}"></td>
+                    <td th:text="${booking.endDate}"></td>
+                    <td style="color:#667eea; font-weight:bold;">
+                        ₹<span th:text="${booking.totalPrice}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${booking.status}"
+                              th:style="${booking.status.name() == 'CONFIRMED'} ?
+                                       'color:green; font-weight:bold' :
+                                       (${booking.status.name() == 'CANCELLED'} ?
+                                       'color:red; font-weight:bold' :
+                                       'color:orange; font-weight:bold')">
+                        </span>
+                    </td>
+                    <td>
+                        <a th:if="${booking.status.name() == 'PENDING'}"
+                           th:href="@{/admin/bookings/confirm/{id}(id=${booking.id})}"
+                           class="btn btn-success"
+                           style="padding:6px 12px; font-size:12px;">
+                            ✅ Confirm
+                        </a>
+                        <a th:if="${booking.status.name() != 'CANCELLED'
+                                   and booking.status.name() != 'COMPLETED'}"
+                           th:href="@{/admin/bookings/cancel/{id}(id=${booking.id})}"
+                           class="btn btn-danger"
+                           style="padding:6px 12px; font-size:12px;">
+                            ❌ Cancel
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>© 2026 RentalSystem. All rights reserved.</p>
+</div>
+
+</body>
+</html>

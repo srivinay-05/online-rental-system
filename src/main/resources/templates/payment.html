@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment - Online Rental System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <a class="brand" th:href="@{/items}">🏠 RentalSystem</a>
+    <div>
+        <a th:href="@{/items}">All Items</a>
+        <a th:href="@{/bookings/my-bookings}">My Bookings</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card" style="max-width:600px; margin:0 auto;">
+        <h2>💳 Payment</h2>
+
+        <!-- Error Message -->
+        <div th:if="${error}" class="alert alert-danger">
+            <span th:text="${error}"></span>
+        </div>
+
+        <!-- Booking Summary -->
+        <div style="background:#f9f9f9; padding:15px; border-radius:8px; margin:15px 0;">
+            <h3>Booking Summary</h3>
+            <table style="width:100%; margin-top:10px; box-shadow:none;">
+                <tr>
+                    <td style="padding:8px 0; color:#777;">Item</td>
+                    <td style="padding:8px 0; font-weight:bold;"
+                        th:text="${booking.item.name}"></td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0; color:#777;">Category</td>
+                    <td style="padding:8px 0;"
+                        th:text="${booking.item.category}"></td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0; color:#777;">Start Date</td>
+                    <td style="padding:8px 0;"
+                        th:text="${booking.startDate}"></td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0; color:#777;">End Date</td>
+                    <td style="padding:8px 0;"
+                        th:text="${booking.endDate}"></td>
+                </tr>
+                <tr>
+                    <td style="padding:8px 0; color:#777;">Status</td>
+                    <td style="padding:8px 0;"
+                        th:text="${booking.status}"></td>
+                </tr>
+                <tr style="border-top:2px solid #ddd;">
+                    <td style="padding:12px 0; font-weight:bold; font-size:18px;">
+                        Total Amount
+                    </td>
+                    <td style="padding:12px 0; font-weight:bold;
+                               font-size:18px; color:#27ae60;">
+                        ₹<span th:text="${booking.totalPrice}"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Payment Form -->
+        <form th:action="@{/payments/pay/{id}(id=${booking.id})}" method="post">
+
+            <div class="form-group">
+                <label>Select Payment Method</label>
+                <select name="paymentMethod" required
+                        style="width:100%; padding:10px; border:1px solid #ddd;
+                               border-radius:5px; font-size:14px;">
+                    <option value="">Choose payment method</option>
+                    <option th:each="method : ${paymentMethods}"
+                            th:value="${method}"
+                            th:text="${method}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- Simulated Card Details -->
+            <div style="background:#f9f9f9; padding:15px;
+                        border-radius:8px; margin:15px 0;">
+                <p style="color:#777; font-size:13px; margin-bottom:10px;">
+                    🔒 Secure Payment (Demo Mode)
+                </p>
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="1234 5678 9012 3456"
+                           maxlength="19"/>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div class="form-group">
+                        <label>Expiry Date</label>
+                        <input type="text" placeholder="MM/YY"/>
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" placeholder="123" maxlength="3"/>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success" style="width:100%;">
+                💳 Pay ₹<span th:text="${booking.totalPrice}"></span>
+            </button>
+        </form>
+
+        <a th:href="@{/bookings/my-bookings}" class="btn btn-primary"
+           style="width:100%; text-align:center; margin-top:10px;">
+            ← Back to My Bookings
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
