@@ -499,4 +499,158 @@ table tr:last-child td {
     .stats-grid {
         grid-template-columns: 1fr 1fr;
     }
+    /* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+    /* Navbar */
+    .navbar {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 10px;
+    }
+
+    .navbar div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .navbar a {
+        margin: 0;
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .navbar .brand {
+        font-size: 18px;
+    }
+
+    /* Hero */
+    .hero {
+        padding: 30px 15px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    /* Search Bar */
+    .search-bar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-bar input {
+        width: 100%;
+    }
+
+    .search-bar button {
+        width: 100%;
+    }
+
+    /* Category Filter */
+    .category-filter {
+        gap: 8px;
+    }
+
+    .category-btn {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+
+    /* Items Grid */
+    .items-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Item Details */
+    .item-details-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .stat-card h3 {
+        font-size: 30px;
+    }
+
+    /* Cards */
+    .card {
+        padding: 15px;
+    }
+
+    /* Auth */
+    .auth-container {
+        margin: 20px auto;
+    }
+
+    .auth-card {
+        padding: 25px;
+    }
+
+    /* Tables */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+
+    /* Container */
+    .container {
+        padding: 0 10px;
+        margin: 15px auto;
+    }
+
+    /* Forms */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px;
+    }
+
+    /* Payment Grid */
+    .payment-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .hero h1 {
+        font-size: 20px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .navbar a {
+        font-size: 11px;
+        padding: 5px 8px;
+    }
+
+    .item-card-image {
+        height: 150px;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+}
 }
