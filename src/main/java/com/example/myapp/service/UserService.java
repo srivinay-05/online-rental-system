@@ -30,11 +30,15 @@ public class UserService {
         User savedUser = userRepository.save(user);
 
         // Send welcome email
-        try {
-            emailService.sendWelcomeEmail(savedUser.getEmail(), savedUser.getName());
-        } catch (Exception e) {
-            System.out.println("Email sending failed: " + e.getMessage());
-        }
+       // Send welcome email asynchronously
+new Thread(() -> {
+    try {
+        emailService.sendWelcomeEmail(savedUser.getEmail(), savedUser.getName());
+    } catch (Exception e) {
+        System.out.println("Email sending failed: " + e.getMessage());
+    }
+}).start();
+
 
         return savedUser;
     }
