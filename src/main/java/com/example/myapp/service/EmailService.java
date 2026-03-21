@@ -16,6 +16,7 @@ public class EmailService {
     // Send Booking Confirmation Email
     public void sendBookingConfirmation(Booking booking) {
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("srivinaygandla@gmail.com");
         message.setTo(booking.getUser().getEmail());
         message.setSubject("🎉 Booking Confirmed - RentalSystem");
         message.setText(
@@ -39,6 +40,7 @@ public class EmailService {
     // Send Payment Success Email
     public void sendPaymentConfirmation(Payment payment) {
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("srivinaygandla@gmail.com");
         message.setTo(payment.getUser().getEmail());
         message.setSubject("💳 Payment Successful - RentalSystem");
         message.setText(
@@ -62,6 +64,7 @@ public class EmailService {
     // Send Booking Cancellation Email
     public void sendBookingCancellation(Booking booking) {
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("srivinaygandla@gmail.com");
         message.setTo(booking.getUser().getEmail());
         message.setSubject("❌ Booking Cancelled - RentalSystem");
         message.setText(
@@ -83,6 +86,7 @@ public class EmailService {
     // Send Welcome Email
     public void sendWelcomeEmail(String email, String name) {
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("srivinaygandla@gmail.com");
         message.setTo(email);
         message.setSubject("🎉 Welcome to RentalSystem!");
         message.setText(
@@ -92,7 +96,7 @@ public class EmailService {
             "✅ Browse items\n" +
             "✅ Book vehicles, houses, equipment and books\n" +
             "✅ Make secure payments\n\n" +
-            "Visit us at: http://localhost:8080\n\n" +
+            "Visit us at: https://online-rental-system-production.up.railway.app\n\n" +
             "Thank you for joining us!\n\n" +
             "Regards,\n" +
             "RentalSystem Team"
