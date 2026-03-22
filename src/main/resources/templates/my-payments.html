@@ -3,6 +3,7 @@
 <head>
     <title>My Payments - Online Rental System</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
 
@@ -13,7 +14,14 @@
         <a href="/items">All Items</a>
         <a href="/bookings/my-bookings">📋 My Bookings</a>
         <a href="/payments/my-payments">💳 My Payments</a>
-        <a href="/logout">🚪 Logout</a>
+        <form action="/logout" method="post" style="display:inline;">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <button type="submit" style="background:none; border:none; color:white;
+                                  cursor:pointer; font-size:14px; padding:8px 12px;
+                                  border-radius:20px; transition:all 0.3s ease;">
+        🚪 Logout
+    </button>
+</form>
     </div>
 </nav>
 
