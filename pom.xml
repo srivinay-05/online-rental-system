@@ -93,12 +93,12 @@
              <groupId>org.springframework.boot</groupId>
              <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-        <!-- SendGrid HTTP API -->
-        <dependency>
-            <groupId>com.sendgrid</groupId>
-            <artifactId>sendgrid-java</artifactId>
-            <version>4.9.3</version>
-        </dependency>
+        <!-- Brevo (Sendinblue) -->
+<dependency>
+    <groupId>com.sendinblue</groupId>
+    <artifactId>sib-api-v3-sdk</artifactId>
+    <version>7.0.0</version>
+</dependency>
     </dependencies>
 
     <build>
